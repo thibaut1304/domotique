@@ -3,3 +3,9 @@
 **/.env
 **/.DS_Store
 **/node_modules
+
+**/*.bin
+**/*.elf
+**/*.map
+
+!/bin/mqtt-emeteur.ino.bin
