@@ -9,3 +9,10 @@
 **/*.map
 
 !/bin/mqtt-emeteur.ino.bin
+!/homebridge/proxy-inverse/.env
+
+
+
+# Volunme docker
+homebridge/volume-host/
+homebridge/volume/
