@@ -1,0 +1,109 @@
+{
+    "bridge": {
+        "name": "Homebridge D82F",
+        "username": "0E:77:D5:ED:D8:2F",
+        "port": 51944,
+        "pin": "408-66-554",
+        "advertiser": "bonjour-hap"
+    },
+    "accessories": [
+        {
+            "accessory": "mqttthing",
+            "type": "switch",
+            "name": "Fumée",
+			"url": "mqtt://192.168.1.12:1884",
+			"username": "USERNAME_MQTT",
+			"password": "PASSWORD_MQTT",
+            "topics": {
+                "getOn": "smoke/getOn",
+                "setOn": "smoke/setOn"
+            },
+            "onValue": "ON",
+            "offValue": "OFF",
+            "turnOffAfterms": 10000
+        },
+        {
+            "accessory": "mqttthing",
+            "type": "lightbulb",
+            "name": "LED Fumée",
+			"url": "mqtt://192.168.1.12:1884",
+			"username": "USERNAME_MQTT",
+			"password": "PASSWORD_MQTT",
+            "topics": {
+                "getOn": "smoke/ledstrip/getOn",
+                "setOn": "smoke/ledstrip/setOn",
+                "getBrightness": "smoke/ledstrip/getBrightness",
+                "setBrightness": "smoke/ledstrip/setBrightness",
+                "getHue": "smoke/ledstrip/getHue",
+                "setHue": "smoke/ledstrip/setHue",
+                "getSaturation": "smoke/ledstrip/getSaturation",
+                "setSaturation": "smoke/ledstrip/setSaturation"
+            },
+            "onValue": "ON",
+            "offValue": "OFF"
+        },
+        {
+            "accessory": "mqttthing",
+            "type": "lightbulb",
+            "name": "Smoke Fade",
+			"url": "mqtt://192.168.1.12:1884",
+			"username": "USERNAME_MQTT",
+			"password": "PASSWORD_MQTT",
+            "topics": {
+                "setOn": "smoke/ledstrip/effect/setFade",
+                "getOn": "smoke/ledstrip/effect/getFade"
+            },
+            "onValue": "ON",
+            "offValue": "OFF"
+        },
+        {
+            "accessory": "mqttthing",
+            "type": "lightbulb",
+            "name": "Smoke Flash",
+			"url": "mqtt://192.168.1.12:1884",
+			"username": "USERNAME_MQTT",
+			"password": "PASSWORD_MQTT",
+            "topics": {
+                "setOn": "smoke/ledstrip/effect/setFlash",
+                "getOn": "smoke/ledstrip/effect/getFlash"
+            },
+            "onValue": "ON",
+            "offValue": "OFF"
+        },
+        {
+            "accessory": "mqttthing",
+            "type": "lightbulb",
+            "name": "Smoke Smooth",
+			"url": "mqtt://192.168.1.12:1884",
+			"username": "USERNAME_MQTT",
+			"password": "PASSWORD_MQTT",
+            "topics": {
+                "setOn": "smoke/ledstrip/effect/setSmooth",
+                "getOn": "smoke/ledstrip/effect/getSmooth"
+            },
+            "onValue": "ON",
+            "offValue": "OFF"
+        },
+        {
+            "accessory": "mqttthing",
+            "type": "lightbulb",
+            "name": "Smoke Strobe",
+			"url": "mqtt://192.168.1.12:1884",
+			"username": "USERNAME_MQTT",
+			"password": "PASSWORD_MQTT",
+            "topics": {
+                "setOn": "smoke/ledstrip/effect/setStrobe",
+                "getOn": "smoke/ledstrip/effect/getStrobe"
+            },
+            "onValue": "ON",
+            "offValue": "OFF"
+        }
+    ],
+    "platforms": [
+        {
+            "name": "Config",
+            "port": 8581,
+            "platform": "config"
+        }
+    ]
+}

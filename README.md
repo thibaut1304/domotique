@@ -18,4 +18,11 @@ PASSWORD="votre_mot_de_passe"
 # define MQTT_PASSWORD "votre_password_definis_dans_env"
 ```
 
-
+## Ajouter un fichier json "secrets.json" dans le dossier homebridge "
+```bash
+{
+	"username" : "USERNAME_MQTT",
+	"password" : "PASSWORD_MQTT"
+}
+```
+Puis executer le script startup.sh
