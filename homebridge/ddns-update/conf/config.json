@@ -2,7 +2,7 @@
     "settings": [
         {
             "provider": "noip",
-            "domain": "aa-homebridge.ddns.net",
+            "domain": "ddns-homebridge.ddns.net",
             "host": "@",
             "username": "raspberry_pi13",
             "password": "PASSWORD"
