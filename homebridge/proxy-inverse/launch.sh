@@ -13,19 +13,20 @@ then
     echo "3. Supprimer le conteneur"
     echo "4. Supprimer l'image"
 	echo "5. Supprimer le conteneur et l'image"
-    read -p "Choisissez une option (1, 2 ou 3): " option
+    read -p "Choisissez une option (1, 2, 3, 4 ou 5): " option
 else
     option=$1
 fi
 case $option in
 1)
-	sh $(pwd)/conf/replace-conf.sh
-    docker build -t $IMAGE_NAME .
-	docker run --name=$CONTAINER_NAME -d -p 8890:8890 $IMAGE_NAME
+	sh $(pwd)/conf/start.sh
+	sh $(pwd)/script/start.sh
+    docker build --no-cache -t $IMAGE_NAME .
+	docker run --name=$CONTAINER_NAME -d -p $HTTP_PORT:$HTTP_PORT -p $HTTPS_PORT:$HTTPS_PORT $IMAGE_NAME
 	docker ps | grep $CONTAINER_NAME
     ;;
 2)
-	docker run --name=$CONTAINER_NAME -d -p 8890:8890 $IMAGE_NAME
+	docker run --name=$CONTAINER_NAME -d -p $HTTP_PORT:$HTTP_PORT -p $HTTPS_PORT:$HTTPS_PORT $IMAGE_NAME
 	docker ps | grep $CONTAINER_NAME
 	;;
 3)
@@ -36,6 +37,7 @@ case $option in
 	;;
 5)
 	rm -f $(pwd)/conf/nginx.conf
+	rm -f $(pwd)/script/renew_cert-clear.sh
     stop_and_remove_container && docker rmi $IMAGE_NAME
     ;;
 *)

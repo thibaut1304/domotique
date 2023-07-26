@@ -2,9 +2,7 @@
 
 source .env
 
-
-
-cp $(pwd)/conf/input.conf $(pwd)/conf/nginx.conf
+cp $(pwd)/script/renew_cert.sh $(pwd)/script/renew_cert-clear.sh
 
 # Read from .env file
 while read -r line
@@ -13,9 +11,9 @@ do
     value=$(echo "$line" | cut -d '=' -f 2)
 
 	if [ $OS = "mac" ]; then
-		EXEC="sed -i '' 's/\${${key}}/${value}/g' $(pwd)/conf/nginx.conf"
+		EXEC="sed -i '' 's/\${${key}}/${value}/g' $(pwd)/script/renew_cert-clear.sh"
 	else
-		EXEC="sed -i 's/\${${key}}/${value}/g' $(pwd)/conf/nginx.conf"
+		EXEC="sed -i 's/\${${key}}/${value}/g' $(pwd)/script/renew_cert-clear.sh"
 	fi
 
     # Replace in the config file
