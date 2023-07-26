@@ -1,8 +1,5 @@
 #!/bin/sh
 
-
-#!/bin/bash
-
 source .env
 
 stop_and_remove_container() {
