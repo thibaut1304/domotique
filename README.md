@@ -1,5 +1,7 @@
 # Domotique IOT
 
+## Pense a retirer --staging de la generation de certificats  let's encrypt
+
 ## Ajouter un fichier .env dans le dossier mosquitto comportant :
 
 ```bash
