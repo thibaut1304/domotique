@@ -1,0 +1,14 @@
+[
+	{
+		"host": "aa-homebridge.ddns.net",
+		"email": "pi.raspberry13@gmail.com",
+		"http_port": 9000,
+		"https_port": 9001
+	},
+	{
+		"host": "tt-homebridge.ddns.net",
+		"email": "pi.raspberry13@gmail.com",
+		"http_port": 8080,
+		"https_port": 8443
+	}
+]
