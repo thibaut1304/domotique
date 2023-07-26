@@ -9,7 +9,7 @@
 **/*.map
 
 !/bin/mqtt-emeteur.ino.bin
-!/homebridge/proxy-inverse/.env
+# !/homebridge/proxy-inverse/.env
 
 
 
