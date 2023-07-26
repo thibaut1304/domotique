@@ -6,6 +6,8 @@
 # Commande LINUX
 # sed -i "s/$username/USERNAME_MQTT/g" config.json
 
+echo "Add reverse to cmd for reverse"
+
 # Load secrets
 username=$(jq -r .username secrets.json)
 password=$(jq -r .password secrets.json)
