@@ -1,0 +1,26 @@
+[
+	{
+	  "email":"pi.raspberry13@gmail.com",
+	  "http_port": 80,
+	  "https_port": 443,
+	  "host": "ddns-homebridge.ddns.net",
+	  "ip_address": "192.168.1.26",
+	  "internal_port": 8000
+	},
+	{
+		"email":"pi.raspberry13@gmail.com",
+		"http_port": 80,
+		"https_port": 443,
+		"host": "homebridge-thibaut.ddns.net",
+		"ip_address": "192.168.1.26",
+		"internal_port": 8581
+	  },
+	  {
+		"email":"pi.raspberry13@gmail.com",
+		"http_port": 80,
+		"https_port": 443,
+		"host": "tt-homebridge.ddns.net",
+		"ip_address": "192.168.1.26",
+		"internal_port": 1234
+	  }
+  ]
