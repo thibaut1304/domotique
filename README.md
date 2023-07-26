@@ -28,3 +28,14 @@ PASSWORD="votre_mot_de_passe"
 }
 ```
 Puis executer le script startup.sh
+
+
+
+# TODO
+
+Voir le tunnel pour masquer l'ip
+Trouver solution pour cela marche
+    "[markdown]": {
+        "editor.trimAutoWhitespace": false
+    }
+Creer un binaire pour l'assiatnce parking arduino et pour le recepteur 433Mhz
