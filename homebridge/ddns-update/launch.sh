@@ -12,13 +12,14 @@ fi
 case $option in
 1)
 	sh $(pwd)/conf/startup.sh
-	docker build --no-cache -t ddns .
-	docker run -d --name=ddns -p 8000:8000 ddns
+	docker build --no-cache -t ddns-update .
+	docker run -d --name=ddns-update -p 8000:8000 ddns-update
+	docker ps | grep ddns-update
+	sh $(pwd)/conf/startup.sh reverse
 	;;
 2)
-	sh $(pwd)/conf/startup.sh reverse
-	docker rm -f ddns
-	docker rmi ddns
+	docker rm -f ddns-update
+	docker rmi ddns-update
 	;;
 *)
 	echo "Option non valide, choisissez 1 ou 2."

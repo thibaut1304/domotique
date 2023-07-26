@@ -4,21 +4,21 @@
             "provider": "noip",
             "domain": "ddns-homebridge.ddns.net",
             "host": "@",
-            "username": "raspberry_pi13",
+            "username": "USERNAME",
             "password": "PASSWORD"
         },
 		{
 			"provider": "noip",
             "domain": "tt-homebridge.ddns.net",
             "host": "@",
-            "username": "raspberry_pi13",
+            "username": "USERNAME",
             "password": "PASSWORD"
 		},
 		{
 		"provider": "noip",
 		"domain": "homebridge-thibaut.ddns.net",
 		"host": "@",
-		"username": "raspberry_pi13",
+		"username": "USERNAME",
 		"password": "PASSWORD"
 		}
     ]
