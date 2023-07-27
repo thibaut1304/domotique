@@ -73,4 +73,4 @@ jq -c '.[]' $JSON_FILE | while read i; do
 done
 echo "}" >> /etc/nginx/nginx.conf
 
-cp /etc/nginx/nginx.conf /copy_files
+cp /etc/nginx/nginx.conf /${VOLUME_CONTAINER}

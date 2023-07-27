@@ -19,4 +19,4 @@ if [ "${CERTIFICATE}" = "true" ]; then
 fi
 
 echo "Launch NGINX ..."
-nginx -g 'daemon off;'
+exec nginx -g 'daemon off;'

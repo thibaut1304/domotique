@@ -1,6 +1,9 @@
 # proxy
 
-Penser à retier le flag '--staging' à certbots pour une veersion prod ainsi que ne plus supprimer le volumes copy_files
+Requiered bash
+
+Penser à retirer le flag '--staging' à certbots
+Penser à retirer le flag '--no-cache' du build
 
 Besoin d'un fichier .env avec
 	CERTIFICATE= true | false
@@ -12,5 +15,5 @@ Besoin d'un fichier .env avec
 
 
 TOTO
-Faire un script pour lire tous les ports du fichiers config.json des differents application et les inserer dans la commande run\n
-Pour si lancement en local chaque application peut etre accesible via ces ports sur la meme ip local et non sur une configuration 80 et 443 pour du online
+Verifier si cron est bien fonctionnel
+check : nginx: [error] open() "/run/nginx/nginx.pid" failed (2: No such file or directory)
