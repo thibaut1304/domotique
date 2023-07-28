@@ -21,3 +21,6 @@
 # Volunme docker
 homebridge/volume-host/
 homebridge/volume/
+
+**/copy_files*/
+**/copy_files/

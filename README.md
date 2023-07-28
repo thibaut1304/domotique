@@ -35,8 +35,10 @@ Puis executer le script startup.sh
 Faire fonctionner cron dans les containers ! backup-homebridge et proxy
 Voir le tunnel pour masquer l'ip
 Trouver solution pour cela marche
+```json
     "[markdown]": {
         "editor.trimAutoWhitespace": false
     }
-Creer un binaire pour l'assiatnce parking arduino et pour le recepteur 433Mhz
-Regarder si je peux utiliser les lasers pour allumer les leds du balcon. Laser :
+```
+Creer un binaire pour l'assiatnce parking arduino et pour le recepteur 433Mhz  
+Regarder si je peux utiliser les lasers pour allumer les leds du balcon. Laser  

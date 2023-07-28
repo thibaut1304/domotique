@@ -8,9 +8,8 @@ cd "$(dirname "$0")"
 JSON_FILE="config.json"
 
 # Default server configuration
+# pid /run/nginx/nginx.pid;
 DEFAULT_CONFIG="
-pid /run/nginx/nginx.pid;
-
 events {}
 
 http {
