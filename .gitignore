@@ -8,6 +8,11 @@
 **/*.elf
 **/*.map
 
+**/*.pub
+
+**/id_rsa.*
+**/id_rsa
+
 !/bin/mqtt-emeteur.ino.bin
 # !/homebridge/proxy-inverse/.env
 
