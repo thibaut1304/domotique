@@ -9,7 +9,18 @@ JSON_FILE="config.json"
 
 # Default server configuration
 # pid /run/nginx/nginx.pid;
+
+
+############# Test william
+# user             www-data;
+# worker_processes auto;
+# pid              /run/nginx.pid;
+#############
+
 DEFAULT_CONFIG="
+user             www-data;
+worker_processes auto;
+pid              /run/nginx.pid;
 events {}
 
 http {
