@@ -14,9 +14,13 @@ fi
 case $option in
 1)
 	sh $(pwd)/conf/startup.sh
+	sudo chown -R 1000 conf/data
+	sudo chmod 777 conf/data
+	sudo chmod 777 conf/data/config.json
 	docker build --no-cache -t $IMAGE_NAME .
 	docker run -d --name=$CONTAINER_NAME -p 8000:8000 $IMAGE_NAME
 	docker ps | grep $CONTAINER_NAME
+	sudo chown -R thibaut conf/data
 	sh $(pwd)/conf/startup.sh reverse
 	;;
 2)

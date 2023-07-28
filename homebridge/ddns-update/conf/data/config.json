@@ -20,6 +20,11 @@
 		"host": "@",
 		"username": "USERNAME",
 		"password": "PASSWORD"
-		}
+		},
+		{
+			"provider": "duckdns",
+			"host": "homebridge-thibaut",
+			"token": "TOKEN"
+		  }
     ]
 }
