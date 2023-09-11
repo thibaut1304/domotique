@@ -6,13 +6,18 @@ Penser à retirer le flag '--staging' à certbots
 Penser à retirer le flag '--no-cache' du build  
 
 Besoin d'un fichier .env avec  
-	CERTIFICATE= true | false | empty  
-	CONTAINER_NAME=  
-	IMAGE_NAME=  
-	HTTP_PORT=  
-	HTTPS_PORT=  
-	DNS=	ip | false | empty  
-
+# true | false | empty  
+CERTIFICATE=false  
+  
+# ip | false | empty  
+DNS=  
+  
+CONTAINER_NAME=duckdns-proxy  
+IMAGE_NAME=duckdns-proxy  
+  
+VOLUME_HOST=$(pwd)/copy_files_duck-dns  
+VOLUME_CONTAINER=/copy_files_duck-dns  
+  
 
 TOTO  
 - Verifier si cron est bien fonctionnel -> n'est pas fonctionnel, voir pour renouveller ssl Cryptbot  

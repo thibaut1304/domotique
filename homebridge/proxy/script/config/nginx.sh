@@ -18,7 +18,7 @@ JSON_FILE="config.json"
 #############
 
 DEFAULT_CONFIG="
-user             www-data;
+# user             www-data;
 worker_processes auto;
 pid              /run/nginx.pid;
 events {}
