@@ -46,6 +46,13 @@ jq -c '.[]' $JSON_FILE | while read i; do
 	HOST=$(echo $i | jq -r '.host')
 	IP_ADDRESS=$(echo $i | jq -r '.ip_address')
 	INTERNAL_PORT=$(echo $i | jq '.internal_port')
+	HTTPS=$(echo $i | jq '.https')
+
+	if [ "${HTTPS}" = true ];then
+		HTTPS="https"	
+	else
+		HTTPS="http"
+	fi
 
 	if [ "${CERTIFICATE}" = "true" ]; then
 		SSL_CERTIFICATE="/etc/letsencrypt/live/${HOST}/fullchain.pem"
@@ -73,7 +80,7 @@ jq -c '.[]' $JSON_FILE | while read i; do
 			ssl_certificate_key ${SSL_CERTIFICATE_KEY};
 
 			location / {
-				proxy_pass http://${IP_ADDRESS}:${INTERNAL_PORT};
+				proxy_pass ${HTTPS}://${IP_ADDRESS}:${INTERNAL_PORT};
 				proxy_set_header Host \$host;
 				proxy_set_header X-Real-IP \$remote_addr;
 			}
