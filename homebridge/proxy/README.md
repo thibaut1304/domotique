@@ -1,6 +1,9 @@
 # proxy
 
-Requiered bash  
+Requiered:
+ - bash  
+ - jq  
+ - docker
 
 Penser à retirer le flag '--staging' à certbots  
 Penser à retirer le flag '--no-cache' du build  

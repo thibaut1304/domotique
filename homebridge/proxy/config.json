@@ -1,8 +1,8 @@
 [
 	  {
 		"email":"pi.raspberry13@gmail.com",
-		"http_port": 2000,
-		"https_port": 2500,
+		"http_port": 80,
+		"https_port": 443,
 		"host": "homebridge-thibaut.duckdns.org",
 		"ip_address": "90.127.2.21",
 		"internal_port": 443,
