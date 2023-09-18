@@ -1,0 +1,6 @@
+version: 1.4
+jobs:
+  - name: HelloWorld
+    cmd: /scripts/hello.sh
+    time: '*/10 * * * * *'
+    onError: Stop
