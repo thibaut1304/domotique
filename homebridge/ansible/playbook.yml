@@ -1,0 +1,10 @@
+---
+- name: Imprime la date toutes les 10 secondes
+  hosts: localhost
+  tasks:
+    - name: Imprime la date actuelle
+      shell: /app/date.sh
+      register: result
+      until: result is succeeded
+      retries: 10
+      delay: 10

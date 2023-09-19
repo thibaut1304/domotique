@@ -1,0 +1,14 @@
+FROM python:3.9-slim-buster
+
+# Installer Ansible
+RUN pip install --no-cache-dir ansible
+
+# Copier le script et le playbook dans le conteneur
+COPY date.sh /app/date.sh
+COPY playbook.yml /app/playbook.yml
+
+# Rendre le script exécutable
+RUN chmod +x /app/date.sh
+
+# Exécuter le playbook au démarrage du conteneur
+CMD ["ansible-playbook", "/app/playbook.yml"]
