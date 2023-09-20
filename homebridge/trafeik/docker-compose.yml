@@ -1,0 +1,35 @@
+version: '3.9' # Mise à jour à une version plus récente pour mieux soutenir Docker Compose 2.15.1
+
+services:
+  traefik:
+    image: traefik:v2.5
+    container_name: traefik
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=pi.raspberry13@gmail.com""
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--providers.file.filename=/traefik_dynamic.toml"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+      - "./traefik_dynamic.toml:/traefik_dynamic.toml"
+    labels:
+      - "traefik.http.routers.traefik.rule=Host(`thibaut-trafeik.duckdns.org`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.routers.traefik.middlewares=redirect-https@file"
+
+networks:
+  default:
+    external:
+      name: traefik_default
