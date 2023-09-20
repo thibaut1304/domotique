@@ -10,7 +10,7 @@
 [http.middlewares]
   [http.middlewares.https-redirect.redirectScheme]
     scheme = "https"
-    paermanent = true
+    permanent = true
 
 [http.services]
   [http.services.my-service.loadBalancer]
