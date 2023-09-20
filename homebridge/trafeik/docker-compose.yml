@@ -1,5 +1,9 @@
 version: '3.9' # Mise à jour à une version plus récente pour mieux soutenir Docker Compose 2.15.1
 
+networks:
+  traefik_default:
+    external: true
+
 services:
   traefik:
     image: traefik:v2.5
@@ -28,8 +32,3 @@ services:
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.entrypoints=web"
       - "traefik.http.routers.traefik.middlewares=redirect-https@file"
-
-networks:
-  default:
-    external:
-      name: traefik_default
