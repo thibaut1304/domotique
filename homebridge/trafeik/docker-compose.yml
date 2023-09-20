@@ -19,7 +19,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=pi.raspberry13@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--providers.file.filename=/traefik_dynamic.toml"
+      - "--providers.file.filename=/etc/traefik/traefik_dynamic.toml"
     ports:
       - "80:80"
       - "443:443"
