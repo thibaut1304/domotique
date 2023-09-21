@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "traefik"
+    networks:
+      - traefik
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik.yml:/etc/traefik/traefik.yml"
+      - "./dynamic.yml:/etc/traefik/dynamic/dynamic.yml"
+    labels:
+      - "traefik.http.routers.api.rule=Host(`thibaut-trafeik.duckdns.org`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls.certresolver=myresolver"
+      
+networks:
+  traefik:
+    external: true
+
