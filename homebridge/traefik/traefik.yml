@@ -1,21 +1,53 @@
 api:
+  insecure: true
   dashboard: true
 
 entryPoints:
   web:
     address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: "websecure"
+          scheme: "https"
+          permanent: true
   websecure:
     address: ":443"
 
 providers:
-  docker:
-    exposedByDefault: false
+  file:
+    filename: /etc/traefik/traefik.yml
+
+http:
+  routers:
+    synology-router:
+      rule: "Host(`thibaut-trafeik.duckdns.org`)"
+      service: synology-service
+      entryPoints:
+        - "web"
+        - "websecure"
+      middlewares:
+        - redirect-to-https
+      tls: 
+       certresolver: letsencrypt
+
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+  services:
+     synology-service:
+      loadBalancer:
+         servers:
+         - url: "http://90.127.2.21:5554"
 
 certificatesResolvers:
-  myresolver:
+  letsencrypt:
     acme:
-      email: pi.raspberry13@gmail.com
-      storage: acme.json
+      email:    "thibaut.husser@free.fr"
+      storage:  "certificates/acme.json"
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       httpChallenge:
-        entryPoint: web
-
+          entryPoint: "web"

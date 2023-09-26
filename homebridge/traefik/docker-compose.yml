@@ -4,23 +4,18 @@ services:
   traefik:
     image: "traefik:v2.5"
     container_name: "traefik"
-    networks:
-      - traefik
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik.yml:/etc/traefik/traefik.yml"
-      - "./dynamic.yml:/etc/traefik/dynamic/dynamic.yml"
+      - "./traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "./certificates/acme.json:/certificates/acme.json:rw"
     labels:
-      - "traefik.http.routers.api.rule=Host(`thibaut-trafeik.duckdns.org`)"
-      - "traefik.http.routers.api.service=api@internal"
-      - "traefik.http.routers.api.entrypoints=websecure"
-      - "traefik.http.routers.api.tls.certresolver=myresolver"
-      
-networks:
-  traefik:
-    external: true
-
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.thibaut-trafeik.duckdns.org`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.synology-router.tls=true"
+      - "traefik.http.routers.synology-router.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.synology-router.entrypoints=websecure"
