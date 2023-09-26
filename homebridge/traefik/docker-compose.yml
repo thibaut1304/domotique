@@ -12,24 +12,21 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik.yml:/etc/traefik/traefik.yml:ro"
       - "./certificates/acme.json:/certificates/acme.json:rw"
+    environment:
+      - DUCKDNS_TOKEN=66117bf7-54a4-4fc5-a142-ab25c5f8146d
     labels:
-      - "traefik.enable=true"
-
         # Dashboard
       - "traefik.http.routers.dashboard.rule=Host(`traefik.thibaut-trafeik.duckdns.org`)"
       - "traefik.http.routers.dashboard.service=api@internal"
-        
-        # Router syno
-      - "traefik.http.routers.synology-router.rule=Host(`thibaut-trafeik.duckdns.org`)"
-      - "traefik.http.routers.synology-router.service=synology-service"
-      - "traefik.http.routers.synology-router.entrypoints=web,websecure"
-      - "traefik.http.routers.synology-router.tls=true"
-      - "traefik.http.routers.synology-router.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.synology-router.middlewares=redirect-to-https"
-
-      # Service pour router syno
-      - "traefik.http.services.synology-service.loadbalancer.server.url=http://90.127.2.21:5554"
-
-      # Middleware auto redirect to https
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+  nginx-proxy:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx-proxy.rule=Host(`nginx.thibaut-trafeik.duckdns.org`)"
+      - "traefik.http.routers.nginx-proxy.entrypoints=web,websecure"
+      - "traefik.http.routers.nginx-proxy.tls=true"
+      - "traefik.http.routers.nginx-proxy.tls.certresolver=letsencrypt"
+      - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.permanent=true"
