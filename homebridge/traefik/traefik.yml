@@ -1,5 +1,9 @@
 api:
+  insecure: false
   dashboard: true
+
+log:
+  level: DEBUG
 
 entryPoints:
   web:
@@ -23,10 +27,15 @@ certificatesResolvers:
     acme:
       email:    "thibaut.husser@free.fr"
       storage:  "certificates/acme.json"
-      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
       dnsChallenge:
         provider: "duckdns"
         delayBeforeCheck: 0
         resolvers:
           - "8.8.8.8:53"
           - "1.1.1.1:53"
+
+            #metrics:
+            #  prometheus:
+            #    buckets: [0.1,0.3,1.2,5.0]
+            #    entryPoint: "websecure"

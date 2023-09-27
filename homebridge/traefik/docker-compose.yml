@@ -7,7 +7,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+        #- "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik.yml:/etc/traefik/traefik.yml:ro"
@@ -16,10 +16,17 @@ services:
       - DUCKDNS_TOKEN=66117bf7-54a4-4fc5-a142-ab25c5f8146d
     labels:
         # Dashboard
+      - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`thibaut-trafeik.duckdns.org`)"
+      - "traefik.http.routers.dashboard.entrypoints=web,websecure"
+      - "traefik.http.routers.dashboard.tls=true"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt-duckdns"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=t:$$apr1$$DUZrG1it$0srKt1QdFxIFCM3Y3mysA."
+        #- "traefik.http.routers.prometheus.rule=Path(`/metrics`)"
+        #- "traefik.http.routers.prometheus.entrypoints=websecure"
+        #- "traefik.http.routers.prometheus.tls=true"
   nginx-proxy:
     image: nginx:latest
     volumes:
@@ -30,6 +37,13 @@ services:
       - "traefik.http.routers.nginx-proxy.entrypoints=web,websecure"
       - "traefik.http.routers.nginx-proxy.tls=true"
       - "traefik.http.routers.nginx-proxy.tls.certresolver=letsencrypt-duckdns"
-        #- "traefik.http.routers.nginx-proxy.middlewares=nginx-redirect-to-https"
-        #- "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https"
-        #- "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.permanent=true"
+      - "traefik.http.routers.nginx-proxy.middlewares=nginx-redirect-to-https"
+      - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.permanent=true"
+        #prometheus:
+        #image: prom/prometheus:latest
+        #volumes:
+        #- ./prometheus.yml:/etc/prometheus/prometheus.yml
+        #ports:
+        #- "9090:9090"
+
