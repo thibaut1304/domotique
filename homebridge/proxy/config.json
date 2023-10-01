@@ -1,34 +1,11 @@
 [
-	{
-	  "email":"pi.raspberry13@gmail.com",
-	  "http_port": 80,
-	  "https_port": 443,
-	  "host": "hello-prout.duckdns.org",
-	  "ip_address": "192.168.1.12",
-	  "internal_port": 5400
-	},
-	{
-		"email":"pi.raspberry13@gmail.com",
-		"http_port": 80,
-		"https_port": 443,
-		"host": "homethibaut.synology.me",
-		"ip_address": "192.168.1.12",
-		"internal_port": 5400
-	  },
-	{
-		"email":"pi.raspberry13@gmail.com",
-		"http_port": 80,
-		"https_port": 443,
-		"host": "thibaut-alice.duckdns.org",
-		"ip_address": "192.168.1.26",
-		"internal_port": 81
-	  },
 	  {
 		"email":"pi.raspberry13@gmail.com",
 		"http_port": 80,
 		"https_port": 443,
-		"host": "alice-baptiste.duckdns.org",
-		"ip_address": "192.168.1.12",
-		"internal_port": 82
+		"host": "homebridge-thibaut.duckdns.org",
+		"ip_address": "90.127.2.21",
+		"internal_port": 443,
+		"https": true
 	  }
   ]

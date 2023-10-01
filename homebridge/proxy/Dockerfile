@@ -22,7 +22,7 @@ RUN chmod +x /etc/certificate.sh
 COPY script/config/start.sh /etc/
 RUN chmod +x /etc/start.sh
 
-RUN (crontab -l ; echo "0 0 * * * /etc/certificate.sh") | crontab -
-RUN (crontab -l ; echo "0 12 * * * /etc/certificate.sh") | crontab -
+# RUN (crontab -l ; echo "0 0 * * * /etc/certificate.sh") | crontab -
+# RUN (crontab -l ; echo "0 12 * * * /etc/certificate.sh") | crontab -
 
 CMD /etc/start.sh
