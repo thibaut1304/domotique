@@ -13,7 +13,7 @@ services:
       - "./traefik.yml:/etc/traefik/traefik.yml:ro"
       - "./certificates/acme.json:/certificates/acme.json:rw"
     environment:
-      - DUCKDNS_TOKEN=66117bf7-54a4-4fc5-a142-ab25c5f8146d
+      - DUCKDNS_TOKEN=${DUCKDNS_TOKEN}
     labels:
         # Dashboard
       - "traefik.enable=true"
@@ -23,7 +23,7 @@ services:
       - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt-duckdns"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=t:$$apr1$$DUZrG1it$0srKt1QdFxIFCM3Y3mysA."
+      - "traefik.http.middlewares.auth.basicauth.users=${AUTH_USER}"
         #- "traefik.http.routers.prometheus.rule=Path(`/metrics`)"
         #- "traefik.http.routers.prometheus.entrypoints=websecure"
         #- "traefik.http.routers.prometheus.tls=true"
