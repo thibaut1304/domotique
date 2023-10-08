@@ -9,7 +9,7 @@
 #define NUM_LEDS 300
 
 const char* ssid = "ERROR-404";
-const char* password = "7bsnJ56xW5FSjK2tka";
+const char* password = "";
 
 Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(NUM_LEDS, PIN1, NEO_GRB + NEO_KHZ800);
 

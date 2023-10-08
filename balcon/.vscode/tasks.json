@@ -4,7 +4,7 @@
         {
             "label": "Build Sketch",
             "type": "shell",
-            "command": "arduino-cli compile --fqbn esp32:esp32:esp32wrover --output-dir /Users/thibaut/Desktop/GitHub/domotique/balcon/bin /Users/thibaut/Desktop/GitHub/domotique/balcon",
+            "command": "arduino-cli compile --fqbn esp32:esp32:esp32wrover --output-dir /home/thibaut/Documents/github/domotique/balcon/bin /home/thibaut/Documents/github/domotique/balcon",
             "group": {
                 "kind": "build",
                 "isDefault": true
