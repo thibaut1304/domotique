@@ -34,8 +34,3 @@ certificatesResolvers:
         resolvers:
           - "8.8.8.8:53"
           - "1.1.1.1:53"
-
-            #metrics:
-            #  prometheus:
-            #    buckets: [0.1,0.3,1.2,5.0]
-            #    entryPoint: "websecure"

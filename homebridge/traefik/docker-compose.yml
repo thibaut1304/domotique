@@ -10,40 +10,53 @@ services:
         #- "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik.yml:/etc/traefik/traefik.yml:ro"
       - "./certificates/acme.json:/certificates/acme.json:rw"
+        #- "./test.yml:/etc/traefik/traefik.yml:ro"
+        #- "./traefik.yml:/etc/traefik/traefik.yml:ro"
     environment:
       - DUCKDNS_TOKEN=${DUCKDNS_TOKEN}
     labels:
         # Dashboard
       - "traefik.enable=true"
+      - "traefik.insecure=true"
+      - "traefik.dashboard=true"
+      - "traefik.log.level=DEBUG"
+      - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.rule=Host(`thibaut-trafeik.duckdns.org`)"
       - "traefik.http.routers.dashboard.entrypoints=web,websecure"
-      - "traefik.http.routers.dashboard.tls=true"
-      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt-duckdns"
-      - "traefik.http.routers.dashboard.service=api@internal"
+        # Entry points
+      - "traefik.http.entrypoints.web.address=:80"
+      - "traefik.http.entrypoints.websecure.address=:443"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+        # Providers
+      - "traefik.providers.docker.endpoint=unix://var/run/docker.sock"
+      - "traefik.providers.docker.exposedByDefault=false"
+        # Certificates
+        # pas necessaire avec traefik v2.x si certresolver definis
+        #- "traefik.http.routers.dashboard.tls=true"
+      - "traefik.certificatesresolvers.letsencrypt-duckdns.acme.email=${ACME_EMAIL}"
+      - "traefik.certificatesresolvers.letsencrypt-duckdns.acme.storage=/certificates/acme.json"
+      - "traefik.certificatesresolvers.letsencrypt-duckdns.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
+      - "traefik.certificatesresolvers.letsencrypt-duckdns.acme.dnsChallenge.provider=duckdns"
+      - "traefik.certificatesresolvers.letsencrypt-duckdns.acme.dnsChallenge.delayBeforeCheck=0"
+      - "traefik.certificatesresolvers.letsencrypt-duckdns.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
+        # AUTH
       - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=${AUTH_USER}"
-        #- "traefik.http.routers.prometheus.rule=Path(`/metrics`)"
-        #- "traefik.http.routers.prometheus.entrypoints=websecure"
-        #- "traefik.http.routers.prometheus.tls=true"
-  nginx-proxy:
-    image: nginx:latest
-    volumes:
-      - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nginx-proxy.rule=Host(`vps-thibaut.duckdns.org`)"
-      - "traefik.http.routers.nginx-proxy.entrypoints=web,websecure"
-      - "traefik.http.routers.nginx-proxy.tls=true"
-      - "traefik.http.routers.nginx-proxy.tls.certresolver=letsencrypt-duckdns"
-      - "traefik.http.routers.nginx-proxy.middlewares=nginx-redirect-to-https"
-      - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.permanent=true"
-        #prometheus:
-        #image: prom/prometheus:latest
+
+  
+  
+        #nginx-proxy:
+        #image: nginx:1.25.2
         #volumes:
-        #- ./prometheus.yml:/etc/prometheus/prometheus.yml
-        #ports:
-        #- "9090:9090"
+        #- ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf
+        #labels:
+        #- "traefik.enable=true"
+        #- "traefik.http.routers.nginx-proxy.rule=Host(`vps-thibaut.duckdns.org`)"
+        #- "traefik.http.routers.nginx-proxy.entrypoints=web,websecure"
+        #- "traefik.http.routers.nginx-proxy.tls.certresolver=letsencrypt-duckdns"
+        #- "traefik.http.routers.nginx-proxy.middlewares=nginx-redirect-to-https"
+        #- "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https"
+        #- "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.permanent=true"
 
