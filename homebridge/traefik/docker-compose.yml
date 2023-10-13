@@ -1,9 +1,14 @@
 version: '3'
 
+networks:
+    traefik-net:
+        driver: bridge
+
 services:
   traefik:
     image: "traefik:v2.5"
     container_name: "traefik"
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -12,7 +17,11 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./certificates/acme.json:/certificates/acme.json:rw"
     environment:
-      - DUCKDNS_TOKEN=${DUCKDNS_TOKEN}
+      # you may choose to use secrets instead of environment variables like this
+      - CF_API_EMAIL=${CF_API_EMAIL}
+      - CF_API_KEY=${CF_API_KEY}
+    networks:
+      - traefik-net
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=false"
@@ -23,34 +32,47 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
       - "--providers.docker.exposedByDefault=false"
-      - "--certificatesresolvers.letsencrypt-duckdns.acme.email=${ACME_EMAIL}"
-      - "--certificatesresolvers.letsencrypt-duckdns.acme.storage=/certificates/acme.json"
-      - "--certificatesresolvers.letsencrypt-duckdns.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.letsencrypt-duckdns.acme.dnsChallenge.provider=duckdns"
-      - "--certificatesresolvers.letsencrypt-duckdns.acme.dnsChallenge.delayBeforeCheck=0"
-      - "--certificatesresolvers.letsencrypt-duckdns.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
+      - "--certificatesresolvers.letsencrypt-flare.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.letsencrypt-flare.acme.storage=/certificates/acme.json"
+      - "--certificatesresolvers.letsencrypt-flare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.letsencrypt-flare.acme.dnsChallenge.provider=cloudflare"
+      - "--certificatesresolvers.letsencrypt-flare.acme.dnsChallenge.delayBeforeCheck=0"
+      - "--certificatesresolvers.letsencrypt-flare.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
     labels:
         # Dashboard
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.rule=Host(`thibaut-trafeik.duckdns.org`)"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.thibaut-husser.com`)"
       - "traefik.http.routers.dashboard.entrypoints=web, websecure"
-      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt-duckdns"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt-flare"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
       - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=${AUTH_USER}"
-  
-  nginx-proxy:
+
+  nginx-nas:
     image: nginx:1.25.2
     volumes:
-      - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/nginx-nas.conf:/etc/nginx/conf.d/default.conf
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nginx-proxy.rule=Host(`vps-thibaut.duckdns.org`)"
+      - "traefik.http.routers.nginx-proxy.rule=Host(`nas.thibaut-husser.com`)"
       - "traefik.http.routers.nginx-proxy.entrypoints=web,websecure"
-      - "traefik.http.routers.nginx-proxy.tls.certresolver=letsencrypt-duckdns"
+      - "traefik.http.routers.nginx-proxy.tls.certresolver=letsencrypt-flare"
       - "traefik.http.routers.nginx-proxy.middlewares=nginx-redirect-to-https"
       - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.permanent=true"
+
+  # nginx-proxmox:
+  #   image: nginx:1.25.2
+  #   volumes:
+  #     - ./nginx/nginx-proxmox.conf:/etc/nginx/conf.d/default.conf
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.nginx-proxy.rule=Host(`proxmox.thibaut-husser.com`)"
+  #     - "traefik.http.routers.nginx-proxy.entrypoints=web,websecure"
+  #     - "traefik.http.routers.nginx-proxy.tls.certresolver=letsencrypt-flare"
+  #     - "traefik.http.routers.nginx-proxy.middlewares=nginx-redirect-to-https"
+  #     - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.scheme=https"
+  #     - "traefik.http.middlewares.nginx-redirect-to-https.redirectscheme.permanent=true"
 

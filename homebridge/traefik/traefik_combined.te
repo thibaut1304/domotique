@@ -1,0 +1,18 @@
+module traefik_combined 1.0;
+
+require {
+    type container_runtime_t;
+    type container_t;
+    type container_var_run_t;
+    type unconfined_t;
+    class sock_file { relabelto write };
+    class unix_stream_socket connectto;
+}
+
+#============= container_t ==============
+allow container_t container_runtime_t:unix_stream_socket connectto;
+allow container_t container_var_run_t:sock_file write;
+
+#============= unconfined_t ==============
+allow unconfined_t container_t:sock_file relabelto;
+
